@@ -8,6 +8,7 @@ st.set_page_config(page_title='Azure OpenAI Service Cost and Token Counter', lay
 st.title('Azure OpenAI Service Cost and Token Counter')
 st.markdown("Easily calculate your Azure OpenAI service costs and count tokens for different models.")
 
+
 # Model selection for token counting
 st.subheader('Token Counter')
 model_tokenizer = st.selectbox('Select the Model for Tokenization', ['gpt-3.5-turbo', 'gpt-4'])
@@ -58,6 +59,6 @@ if st.button('Calculate Total Cost'):
 
 # Footer
 st.markdown("---")
-st.caption("Created with Streamlit")
+st.caption("Made with :heart: by [Rama Chetan Atmudi](https://www.linkedin.com/in/rama-chetan/)")
 
 # Run this with `streamlit run your_script.py` in your terminal
