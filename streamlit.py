@@ -29,7 +29,15 @@ def calculate_cost(model, prompt_tokens, completion_tokens, messages, conversati
     cost_per_message = prompt_cost + completion_cost
     cost_per_conversation = cost_per_message * messages
     cost_per_user = cost_per_conversation * conversations
-    return cost_per_user * users
+    total_cost = cost_per_user * users
+    return {
+        "prompt_cost": prompt_cost,
+        "completion_cost": completion_cost,
+        "cost_per_message": cost_per_message,
+        "cost_per_conversation": cost_per_conversation,
+        "cost_per_user": cost_per_user,
+        "total_cost": total_cost
+    }
 
 # Using columns to organize the layout
 col1, col2 = st.columns(2)
@@ -73,10 +81,14 @@ with col2:
     no_of_users = st.number_input("Number of Users", min_value=0, key='no_users')
 
     if st.button('Calculate Total Cost', key='calculate_cost'):
-        total_cost = calculate_cost(model, avg_prompt_tokens, avg_completion_tokens, messages_per_conversation, avg_conversations, no_of_users)
-        st.subheader("Total Cost (USD):")
-        st.write(f"${total_cost:.2f}")
-
+        cost_breakdown = calculate_cost(model, avg_prompt_tokens, avg_completion_tokens, messages_per_conversation, avg_conversations, no_of_users)
+        st.subheader("Cost Breakdown (USD):")
+        st.write(f"Prompt Cost: ${cost_breakdown['prompt_cost']:.4f}")
+        st.write(f"Completion Cost: ${cost_breakdown['completion_cost']:.4f}")
+        st.write(f"Cost Per Message: ${cost_breakdown['cost_per_message']:.4f}")
+        st.write(f"Cost Per Conversation: ${cost_breakdown['cost_per_conversation']:.4f}")
+        st.write(f"Cost Per User: ${cost_breakdown['cost_per_user']:.4f}")
+        st.subheader(f"Total Cost (USD): ${cost_breakdown['total_cost']:.2f}")
 # Footer and credits
 st.markdown("---")
 st.caption("Developed by [Rama Chetan Atmudi](https://www.linkedin.com/in/rama-chetan/)")
